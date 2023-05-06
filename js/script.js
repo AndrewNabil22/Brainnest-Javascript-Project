@@ -27,7 +27,7 @@ let validRounds = 1;
       console.log(result);
       console.log("Your score is: " + playerPoints + "\nComputer score is: " + computerPoints);
   
-      if (result !== "It's a tie") {
+      if (result !== "It's a tie, round did not count.") {
         validRounds++;
       }
   
