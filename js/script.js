@@ -1,4 +1,4 @@
-let welcomeMsg = "Let's play Rock Paper Scissors.";
+let welcomeMsg = "Let's play Rock Paper Scissors. \nIt's a 5 rounds game, \nYou gonna like it.";
 let startMsg = "Are you ready? Write 'yes' if you are.";
   
   alert(welcomeMsg);
@@ -102,7 +102,7 @@ function game(playerSelection, computerSelection) {
   return result;
 }
 
-function winner(){
+function playAround() {
   if (playerPoints > computerPoints) {
     console.log("Congratulations, You Win!");
 
@@ -117,4 +117,4 @@ function winner(){
   }
 }
 
-winner();
+playAround();
