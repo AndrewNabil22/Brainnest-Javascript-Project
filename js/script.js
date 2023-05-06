@@ -3,40 +3,57 @@ let startMsg = "Are you ready? Write 'yes' if you are.";
   
   alert(welcomeMsg);
 
-let answer = prompt(startMsg);
-
 let playerPoints = 0;
 let computerPoints = 0;
 
   console.log("Great, let's start!");
-  
+
+let answer = prompt(startMsg);
 let round = 1;
 let validRounds = 1;
 
 function game() {
   while (validRounds < 6) {
-    if (answer.toLowerCase() === "yes") {
+
+    if (answer === null) {
+      console.log("Game over. You have cancelled the game.");
+      return;
+    }
+
+    answer = answer.trim();
+    answer = answer.toLowerCase();
+
+    if (answer === "yes") {
       console.log("\nRound " + validRounds + ":");
+
       const playerRes = playerSelection();
-  
-      console.log(playerRes);
-      const computerRes = computerSelection();
-  
-      console.log(computerRes);
-      const result = playAround(playerRes, computerRes);
-  
-      console.log(result);
-      console.log("Your score is: " + playerPoints + "\nComputer score is: " + computerPoints);
-  
-      if (result !== "It's a tie, round did not count.") {
-        validRounds++;
+      if (playerRes === null) {
+        console.log("Game over. You have cancelled the game.");
+        return;
       }
+      console.log(playerRes);
+
+      const computerRes = computerSelection();
+      console.log(computerRes);
+
+      const result = playAround(playerRes, computerRes);
+      console.log(result);
+
+      console.log("Your score is: " + playerPoints + "\nComputer score is: " + computerPoints);
+
+      validRounds++;
   
-    } else if (answer.toLowerCase() === "exit") {
+    } else if (answer === "exit") {
       break;
   
     } else {
       let tryAgain = prompt("Please type 'yes'.");
+
+      if (tryAgain === null) { 
+        console.log("Game over. You have cancelled the game.");
+        return;
+      }
+
       answer = tryAgain;
     }
   
@@ -47,23 +64,33 @@ function game() {
   winner();
 }
 
-  function playerSelection() {
-    let playerChoice = prompt("Round " + validRounds + ": " + "Type 'rock $ paper $ scissors, shoot!'");
+function playerSelection() {
+  let playerChoice = prompt("Round " + validRounds + ": " + "Type 'rock $ paper $ scissors, shoot!'");
+
+  if (playerChoice === null) {
+    return null;
+  }
+
+  playerChoice = playerChoice.trim();
+  playerChoice = playerChoice.toLowerCase();
+
+  for (let i = 1; true; i++) {
+
+    if (playerChoice.toLowerCase() === "rock" || playerChoice.toLowerCase() === "paper" || playerChoice.toLowerCase() === "scissors") {
+      return playerChoice;
   
-    for (let i = 1; true; i++) {
-      if (playerChoice === null) {
-        break;
+    } else {
+      let anotherChoice = prompt("Round " + validRounds + ": " + "Please try type 'rock' or 'paper' or 'scissors'.");
+
+      if (anotherChoice === null) {
+        return null;
       }
 
-      if (playerChoice.toLowerCase() === "rock" || playerChoice.toLowerCase() === "paper" || playerChoice.toLowerCase() === "scissors") {
-        return playerChoice;
-  
-      } else {
-        let anotherChoice = prompt("Round " + validRounds + ": " + "Please try type 'rock' or 'paper' or 'scissors'.");
-        playerChoice = anotherChoice;
-      }
-    }
+      anotherChoice = anotherChoice.trim().toLowerCase();
+      playerChoice = anotherChoice;
+     }
   }
+}
 
 function computerSelection() {
   let randomNum = Math.floor(3 * Math.random());
@@ -80,30 +107,30 @@ function computerSelection() {
 }
 
 function playAround(playerSelection, computerSelection) {
+  const playerChoice = playerSelection.toLowerCase();
+  const computerChoice = computerSelection.toLowerCase();
   let result = "";
 
-  if (playerSelection.toLowerCase() === "rock" && computerSelection.toLowerCase() === "scissors") {
+  if (playerChoice === "rock" && computerChoice === "scissors") {
     result = "One point for the player!!";
     playerPoints++;
-  } else if (playerSelection.toLowerCase() === "paper" && computerSelection.toLowerCase() === "rock") {
+  } else if (playerChoice === "paper" && computerChoice === "rock") {
     result = "One point for the player!!";
     playerPoints++;
-  } else if (playerSelection.toLowerCase() === "scissors" && computerSelection.toLowerCase() === "paper") {
+  } else if (playerChoice === "scissors" && computerChoice === "paper") {
     result = "One point for the player!!";
     playerPoints++;
-  } else if (computerSelection.toLowerCase() === "rock" && playerSelection.toLowerCase() === "scissors") {
+  } else if (computerChoice === "rock" && playerChoice === "scissors") {
     result = "One point for the computer!!";
     computerPoints++;
-  } else if (computerSelection.toLowerCase() === "paper" && playerSelection.toLowerCase() === "rock") {
+  } else if (computerChoice === "paper" && playerChoice === "rock") {
     result = "One point for the computer!!";
     computerPoints++;
-  } else if (computerSelection.toLowerCase() === "scissors" && playerSelection.toLowerCase() === "paper") {
+  } else if (computerChoice === "scissors" && playerChoice === "paper") {
     result = "One point for the computer!!";
     computerPoints++;
-  } else if (playerSelection.toLowerCase() === computerSelection.toLowerCase()) {
-    result = "It's a tie, round did not count.";
-  } else {
-    result = "Invalid input. Please choose 'rock', 'paper', or 'scissors'.";
+  } else if (playerChoice === computerChoice) {
+    result = "It's a tie!!"
   }
 
   return result;
@@ -119,8 +146,12 @@ function winner() {
   } else if (playerPoints === computerPoints) {
     console.log("Hard game, It's a tie.");
 
+  } else if (playerPoints === computerPoints) {
+    console.log("You can come back any time.");
+
   } else {
     console.log("Something went wrong, start over.");
+    
   }
 }
 
