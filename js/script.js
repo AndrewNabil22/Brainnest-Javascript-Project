@@ -13,6 +13,7 @@ let computerPoints = 0;
 let round = 1;
 let validRounds = 1;
 
+function game() {
   while (validRounds < 6) {
     if (answer.toLowerCase() === "yes") {
       console.log("\nRound " + validRounds + ":");
@@ -22,7 +23,7 @@ let validRounds = 1;
       const computerRes = computerSelection();
   
       console.log(computerRes);
-      const result = game(playerRes, computerRes);
+      const result = playAround(playerRes, computerRes);
   
       console.log(result);
       console.log("Your score is: " + playerPoints + "\nComputer score is: " + computerPoints);
@@ -43,6 +44,8 @@ let validRounds = 1;
       break;
     }
   }
+  winner();
+}
 
   function playerSelection() {
     let playerChoice = prompt("Round " + validRounds + ": " + "Type 'rock $ paper $ scissors, shoot!'");
@@ -72,7 +75,7 @@ function computerSelection() {
   }
 }
 
-function game(playerSelection, computerSelection) {
+function playAround(playerSelection, computerSelection) {
   let result = "";
 
   if (playerSelection.toLowerCase() === "rock" && computerSelection.toLowerCase() === "scissors") {
@@ -102,7 +105,7 @@ function game(playerSelection, computerSelection) {
   return result;
 }
 
-function playAround() {
+function winner() {
   if (playerPoints > computerPoints) {
     console.log("Congratulations, You Win!");
 
@@ -117,4 +120,4 @@ function playAround() {
   }
 }
 
-playAround();
+game();
