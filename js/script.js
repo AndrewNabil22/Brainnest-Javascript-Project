@@ -94,7 +94,7 @@ function game(playerSelection, computerSelection) {
     result = "One point for the computer!!";
     computerPoints++;
   } else if (playerSelection.toLowerCase() === computerSelection.toLowerCase()) {
-    result = "It's a tie";
+    result = "It's a tie, round did not count.";
   } else {
     result = "Invalid input. Please choose 'rock', 'paper', or 'scissors'.";
   }
