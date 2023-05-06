@@ -51,6 +51,10 @@ function game() {
     let playerChoice = prompt("Round " + validRounds + ": " + "Type 'rock $ paper $ scissors, shoot!'");
   
     for (let i = 1; true; i++) {
+      if (playerChoice === null) {
+        break;
+      }
+
       if (playerChoice.toLowerCase() === "rock" || playerChoice.toLowerCase() === "paper" || playerChoice.toLowerCase() === "scissors") {
         return playerChoice;
   
